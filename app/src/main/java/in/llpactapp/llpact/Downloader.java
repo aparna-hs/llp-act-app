@@ -21,7 +21,6 @@ public class Downloader {
 
     static String fileURL = "https://github.com/aparna-hs/llpact-repo/archive/v0.1.zip";
     static String fileName = "dump.zip";
-    static String unzipFolder = "llpact-docs";
 
     public static void download(Context context) {
         try {
@@ -49,7 +48,7 @@ public class Downloader {
             fos.flush();
             fos.close();
 
-            File docsFolder = new File(context.getFilesDir(), unzipFolder);
+            File docsFolder = new File(context.getFilesDir(), Constants.SOURCE_DIRECTORY);
 
             if (docsFolder.exists()) {
                 FileUtils.deleteDirectory(docsFolder);
