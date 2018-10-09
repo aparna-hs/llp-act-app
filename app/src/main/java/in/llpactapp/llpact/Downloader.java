@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 public class Downloader {
 
-    static String fileURL = "https://github.com/aparna-hs/llpact-repo/archive/v0.1.zip";
+    static String fileURL = "https://github.com/aparna-hs/llpact-repo/archive/v0.4.zip";
     static String fileName = "dump.zip";
 
     public static void download(Context context) {
@@ -65,6 +65,8 @@ public class Downloader {
 
             for (Object c: files)
                 Log.i("HERE", c.toString());
+
+
         } catch(Exception e) {
             Log.e("Downloader", e.getLocalizedMessage());
         }

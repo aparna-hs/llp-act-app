@@ -1,6 +1,7 @@
 package in.llpactapp.llpact;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,33 +16,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.io.File;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
     ListView categories;
-
-
+    LevelData levelData;
     CardViewAdapter list_adapter;
-    String[] sections = new String[] {
-            "Chapters",
-            "Rules"
-    };
 
-    public static int [] images = { R.drawable.ic_launcher_background, R.drawable.ic_launcher_background };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        init();
-        categories.setAdapter(list_adapter);
+
         new AsyncTask<Void, Void, Void>()
         {
             @Override
             protected void onPostExecute(final Void result) {
                 Log.d("HERE", "done");
+                setContentView(R.layout.activity_main);
+
+                init();
+                categories.setAdapter(list_adapter);
             }
 
             @Override
@@ -54,21 +54,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init() {
-//        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("CSEGenie");
-//        getSupportActionBar().setSubtitle("Know the Services");
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        //setSupportActionBar(toolbar);
-        list_adapter = new CardViewAdapter(this, sections, images);
-        categories = (ListView) findViewById(R.id.categoriesListView);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        File docsFolder = new File(getApplicationContext().getFilesDir(), Constants.SOURCE_DIRECTORY);
+        File[] fList = docsFolder.listFiles();
+
+        String root_dir_path = fList[0].getAbsolutePath();
+
+        StructureService structureService = new StructureService();
+        levelData = structureService.getCurrentLevelData(root_dir_path, getApplicationContext());
+
+        list_adapter = new CardViewAdapter(this, levelData);
+        categories = findViewById(R.id.categoriesListView);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /*categories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

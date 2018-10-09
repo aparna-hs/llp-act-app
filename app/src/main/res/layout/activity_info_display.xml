@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SectionActivity">
+    tools:context=".InfoDisplayActivity">
 
-    <include layout="@layout/content_main" />
-
+    <es.dmoral.markdownview.MarkdownView
+        android:id="@+id/markdown_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin = "20dp"/>
 </android.support.constraint.ConstraintLayout>

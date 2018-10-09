@@ -20,11 +20,11 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/im_pic"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
-
+-->
 
             <TextView
                 android:id="@+id/tv_name"
