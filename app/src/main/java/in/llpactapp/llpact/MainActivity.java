@@ -3,6 +3,7 @@ package in.llpactapp.llpact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,9 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     ListView categories;
     LevelData levelData;
     CardViewAdapter list_adapter;
+    SharedPreferences sharedpreferences;
+    boolean shouldDownload = true;
 
 
     @Override
@@ -39,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.splash_screen_download);
         ImageView imageView = findViewById(R.id.pleasewait);
         Glide.with(this).load(R.drawable.loading).into(imageView);
+
+
 
         new AsyncTask<Void, Void, Void>()
         {
@@ -53,7 +61,41 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             protected Void doInBackground(final Void... params) {
+                sharedpreferences = getApplicationContext().getSharedPreferences("downloadpref", Context.MODE_PRIVATE);
+                Date currentDate = Calendar.getInstance().getTime();
+                Long date_end = currentDate.getTime();
+                Log.d("datePref",currentDate.toString());
+                if(sharedpreferences.contains("date"))
+                {
+
+                    Long date_start = sharedpreferences.getLong("date", 0);
+                    try {
+
+                        //Log.d("datePref",oldDate.toString());
+                        shouldDownload = printDifference(date_start,date_end);
+                        Log.d("timecheck",Boolean.toString(shouldDownload));
+                        Log.d("timecheck","done2");
+                    } catch (Exception e)
+                    {
+                        Log.d("parse","unable to parse");
+                    }
+                    // Log.d("datePref",formattedDate);
+
+                }
+                Log.d("timecheck","done4");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putLong("date",date_end);
+                Log.d("datePref",currentDate.toString());
+                editor.commit();
+
+                if(!shouldDownload){
+                    Log.d("timecheck","done3");
+
+                    return null;
+                }
+
                 Downloader.download(getApplicationContext());
+                Log.d("timecheck","done5");
                 return null;
             }
         }.execute();
@@ -61,6 +103,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init() {
+
 
         File docsFolder = new File(getApplicationContext().getFilesDir(), Constants.SOURCE_DIRECTORY);
         File[] fList = docsFolder.listFiles();
@@ -90,6 +133,31 @@ public class MainActivity extends AppCompatActivity
 
         }
         ); */
+
+    }
+
+    public static boolean printDifference(Long startDate, Long endDate) {
+        //milliseconds
+
+        long different = endDate - startDate;
+
+        Log.d("timecheckstart",startDate.toString());
+        Log.d("timecheckend",endDate.toString());
+        Log.d("timecheck ",Long.toString(different));
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+        long checkthreedays = 1*minutesInMilli;
+
+        if(different>checkthreedays)
+        {
+            Log.d("timecheck",Long.toString(checkthreedays));
+            return true;
+        }
+        return false;
+
 
     }
 

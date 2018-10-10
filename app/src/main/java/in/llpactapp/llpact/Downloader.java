@@ -1,6 +1,7 @@
 package in.llpactapp.llpact;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.apache.commons.io.FileUtils;
@@ -15,7 +16,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import okhttp3.MediaType;
@@ -27,9 +31,11 @@ public class Downloader {
 
     static String fileURL = "";
     static String fileName = "dump.zip";
+    static SharedPreferences sharedpreferences;
 
     static OkHttpClient client;
     static MediaType JSON;
+    static boolean shouldDownload;
 
     public static void download(Context context) {
 
@@ -44,6 +50,21 @@ public class Downloader {
             JSONObject jsonObject = new JSONObject(result);
             fileURL = jsonObject.getString("zipball_url");
             Log.d("OKGETTING",result);
+            sharedpreferences = context.getSharedPreferences("downloadpref", Context.MODE_PRIVATE);
+            String testUrl ="";
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            if(sharedpreferences.contains("url"))
+            {
+                testUrl= sharedpreferences.getString("url", null);
+                if(testUrl.equals(fileURL))
+                {
+                    Log.d("Sharedpref","i am working");
+                    return;
+                }
+            }
+            Log.d("Sharedpref","i am not working");
+            editor.putString("url",fileURL);
+            editor.commit();
             File zipFilePath = new File(context.getFilesDir(), fileName);
             Log.d("HERE", zipFilePath.getAbsolutePath());
 
@@ -91,6 +112,8 @@ public class Downloader {
             Log.e("Downloader", e.getLocalizedMessage());
         }
     }
+
+
 
 
 }
