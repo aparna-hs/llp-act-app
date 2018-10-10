@@ -18,6 +18,8 @@ public class InfoDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info_display);
         Intent intent = getIntent();
         String path = intent.getStringExtra("path");
+        String title = intent.getStringExtra("name");
+        getSupportActionBar().setTitle(title);
         Log.d("markdown",path);
         MarkdownView markdownView = findViewById(R.id.markdown_view);
         markdownView.loadFromFile(new File(path));

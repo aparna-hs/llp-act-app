@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import java.io.File;
 import java.util.List;
@@ -30,6 +31,8 @@ public class SectionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String root_dir_path = intent.getStringExtra("path");
+        String title = intent.getStringExtra("name");
+        getSupportActionBar().setTitle(title);
 
         StructureService structureService = new StructureService();
         levelData = structureService.getCurrentLevelData(root_dir_path, getApplicationContext());

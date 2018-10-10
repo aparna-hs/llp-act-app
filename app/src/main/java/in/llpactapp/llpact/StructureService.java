@@ -49,13 +49,35 @@ public class StructureService {
             this.isFolder = true;
         }
 
-        for (File file: fList) {
-            System.out.println(file.getName());
-            Log.d("HEREEE",file.getName());
-            if(file.getName().equals(".gitignore") || file.getName().equals(".keep") )
-                continue;
-            this.contentsPath.add(file.getAbsolutePath());
-            this.contentsName.add(file.getName());
+        if(!isFolder)
+        {
+            //files
+
+            for (File file: fList) {
+
+                if(file.getName().equals(".keep") )
+                    continue;
+                this.contentsPath.add(file.getAbsolutePath());
+                String file_name = file.getName();
+                file_name = file_name.substring(0,(file_name.length()-3));
+                this.contentsName.add(file_name);
+
+                }
+
         }
+        else
+        {
+            // folders
+            for (File file: fList) {
+
+                if(file.getName().equals(".gitignore"))
+                    continue;
+                this.contentsPath.add(file.getAbsolutePath());
+                this.contentsName.add(file.getName());
+
+            }
+        }
+
+
     }
 }

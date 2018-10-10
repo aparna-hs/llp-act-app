@@ -68,13 +68,17 @@ public class CardViewAdapter extends BaseAdapter {
                 if(isFolder) {
                     Intent intent = new Intent(view.getContext(), SectionActivity.class);
                     intent.putExtra("path",catgeoryPaths.get(position));
+                    intent.putExtra("name",categoryNames.get(position));
                     view.getContext().startActivity(intent);
                 }
                 else
                 {
                     Log.d("markdown","entering path");
                     Intent intent = new Intent(view.getContext(), InfoDisplayActivity.class);
+                    String title = categoryNames.get(position);
+
                     intent.putExtra("path",catgeoryPaths.get(position));
+                    intent.putExtra("name", title);
                     view.getContext().startActivity(intent);
                 }
 
