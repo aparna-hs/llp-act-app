@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SectionActivity" />
-        <activity android:name=".InfoDisplayActivity"></activity>
+        <activity android:name=".InfoDisplayActivity" />
     </application>
 
 </manifest>

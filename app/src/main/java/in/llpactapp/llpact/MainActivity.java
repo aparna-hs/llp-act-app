@@ -14,10 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,7 +36,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.splash_screen_download);
+        ImageView imageView = findViewById(R.id.pleasewait);
+        Glide.with(this).load(R.drawable.loading).into(imageView);
 
         new AsyncTask<Void, Void, Void>()
         {

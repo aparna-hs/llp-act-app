@@ -6,6 +6,7 @@ import android.util.Log;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,13 +18,32 @@ import java.net.URLConnection;
 import java.util.Collection;
 import java.util.Iterator;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class Downloader {
 
-    static String fileURL = "https://github.com/aparna-hs/llpact-repo/archive/v0.4.zip";
+    static String fileURL = "";
     static String fileName = "dump.zip";
 
+    static OkHttpClient client;
+    static MediaType JSON;
+
     public static void download(Context context) {
+
+        client = new OkHttpClient();
+        JSON = MediaType.parse("application/json; charset=utf-8");
+
         try {
+            Request request = new Request.Builder().
+                    url("https://api.github.com/repos/aparna-hs/llpact-repo/releases/latest").build();
+            Response response = client.newCall(request).execute();
+            String result = response.body().string();
+            JSONObject jsonObject = new JSONObject(result);
+            fileURL = jsonObject.getString("zipball_url");
+            Log.d("OKGETTING",result);
             File zipFilePath = new File(context.getFilesDir(), fileName);
             Log.d("HERE", zipFilePath.getAbsolutePath());
 
@@ -71,4 +91,6 @@ public class Downloader {
             Log.e("Downloader", e.getLocalizedMessage());
         }
     }
+
+
 }
