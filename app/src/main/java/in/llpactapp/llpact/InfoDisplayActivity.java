@@ -22,5 +22,6 @@ public class InfoDisplayActivity extends AppCompatActivity {
         MarkdownView markdownView = findViewById(R.id.markdown_view);
         markdownView.loadFromFile(new File(path));
 
+
     }
 }

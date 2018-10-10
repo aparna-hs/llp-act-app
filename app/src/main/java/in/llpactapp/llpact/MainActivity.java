@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     CardViewAdapter list_adapter;
     SharedPreferences sharedpreferences;
     boolean shouldDownload = true;
+    FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -116,13 +119,30 @@ public class MainActivity extends AppCompatActivity
         list_adapter = new CardViewAdapter(this, levelData);
         categories = findViewById(R.id.categoriesListView);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+        floatingActionButton = findViewById(R.id.search_bt);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), SearchActivity.class);
+                view.getContext().startActivity(intent);
+
+
+            }
+        });
+
+
+
+
+
+        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
         /*categories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
