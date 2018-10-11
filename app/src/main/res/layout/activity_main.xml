@@ -20,17 +20,17 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/search_bt"
-            android:layout_width="68dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorSecondary"
+            android:layout_margin="16dp"
 
-            android:layout_marginEnd="59dp"
-            android:layout_marginBottom="56dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@android:drawable/ic_menu_search"
-            app:backgroundTint="@color/colorAccent"
+            app:backgroundTint="@color/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="294dp" />
