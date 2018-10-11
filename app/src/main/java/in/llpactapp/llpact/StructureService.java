@@ -59,7 +59,7 @@ public class StructureService {
                     continue;
                 this.contentsPath.add(file.getAbsolutePath());
                 String file_name = file.getName();
-                file_name = file_name.substring(0,(file_name.length()-3));
+                file_name = file_name.substring(1,(file_name.length()-3));
                 this.contentsName.add(file_name);
 
                 }
@@ -73,7 +73,9 @@ public class StructureService {
                 if(file.getName().equals(".gitignore"))
                     continue;
                 this.contentsPath.add(file.getAbsolutePath());
-                this.contentsName.add(file.getName());
+                String file_name = file.getName();
+                file_name = file_name.substring(1);
+                this.contentsName.add(file_name);
 
             }
         }

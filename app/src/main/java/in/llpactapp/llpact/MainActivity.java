@@ -23,12 +23,11 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +40,10 @@ public class MainActivity extends AppCompatActivity
     boolean shouldDownload = true;
     FloatingActionButton floatingActionButton;
 
+    private ArrayList<String> index_paths = new ArrayList<>();
+    private  ArrayList<String> index_names = new ArrayList<>();
+    private ArrayList<Boolean> index_folder = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.splash_screen_download);
         ImageView imageView = findViewById(R.id.pleasewait);
         Glide.with(this).load(R.drawable.loading).into(imageView);
+
 
 
 
@@ -108,11 +112,20 @@ public class MainActivity extends AppCompatActivity
     private void init() {
 
 
+
+
         File docsFolder = new File(getApplicationContext().getFilesDir(), Constants.SOURCE_DIRECTORY);
         File[] fList = docsFolder.listFiles();
 
         String root_dir_path = fList[0].getAbsolutePath();
-
+        createSearchTitleIndex(fList[0]);
+        Constants.indexNames = index_names;
+        Constants.indexPaths = index_paths;
+        Constants.indexFolder = index_folder;
+        /*for(int i = 0; i<index_names.size(); i++)
+        {
+            LevelData newData = new LevelData()
+        }*/
         StructureService structureService = new StructureService();
         levelData = structureService.getCurrentLevelData(root_dir_path, getApplicationContext());
 
@@ -136,12 +149,12 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+       /* NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
         /*categories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +166,32 @@ public class MainActivity extends AppCompatActivity
 
         }
         ); */
+
+    }
+
+    private void createSearchTitleIndex(File dir)
+    {
+
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    index_paths.add(file.getAbsolutePath());
+                    String file_name = file.getName();
+                    file_name = file_name.substring(1);
+                    index_names.add(file_name);
+                    index_folder.add(true);
+                    createSearchTitleIndex(file);
+                } else {
+
+                    String file_name = file.getName();
+                    if(file_name.equals(".gitignore"))
+                        continue;
+                    index_paths.add(file.getAbsolutePath());
+                    file_name = file_name.substring(1,(file_name.length()-3));
+                    index_names.add(file_name);
+                    index_folder.add(false);
+                }
+            }
 
     }
 
@@ -234,8 +273,8 @@ public class MainActivity extends AppCompatActivity
 //
 //        }
 //
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
+       DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
