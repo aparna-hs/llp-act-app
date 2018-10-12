@@ -1,5 +1,6 @@
 package in.llpactapp.llpact;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +24,9 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         searchView = findViewById(R.id.searchview);
         list = findViewById(R.id.listview);
-
-
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
+        getSupportActionBar().setTitle(title);
         searchView.setQueryHint("Type keyword here");
 
         adapter = new ListViewAdapter(this, Constants.indexNames);

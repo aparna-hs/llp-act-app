@@ -4,6 +4,7 @@ package in.llpactapp.llpact;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     SharedPreferences sharedpreferences;
     boolean shouldDownload = true;
     FloatingActionButton floatingActionButton;
+    boolean net_exists = true;
 
     private ArrayList<String> index_paths = new ArrayList<>();
     private  ArrayList<String> index_names = new ArrayList<>();
@@ -60,6 +63,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(final Void result) {
                 Log.d("HERE", "done");
+
+                if(!net_exists)
+                {
+                    setContentView(R.layout.no_internet_connection);
+                    return;
+                }
                 setContentView(R.layout.activity_main);
 
                 init();
@@ -89,6 +98,15 @@ public class MainActivity extends AppCompatActivity
                     // Log.d("datePref",formattedDate);
 
                 }
+                else
+                {
+                    if(!isNetworkConnected())
+                    {
+                        net_exists = false;
+                        return null;
+                    }
+                }
+
                 Log.d("timecheck","done4");
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putLong("date",date_end);
@@ -115,13 +133,10 @@ public class MainActivity extends AppCompatActivity
 
 
         File docsFolder = new File(getApplicationContext().getFilesDir(), Constants.SOURCE_DIRECTORY);
-        File[] fList = docsFolder.listFiles();
+        final File[] fList = docsFolder.listFiles();
 
         String root_dir_path = fList[0].getAbsolutePath();
-        createSearchTitleIndex(fList[0]);
-        Constants.indexNames = index_names;
-        Constants.indexPaths = index_paths;
-        Constants.indexFolder = index_folder;
+
         /*for(int i = 0; i<index_names.size(); i++)
         {
             LevelData newData = new LevelData()
@@ -137,8 +152,13 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                createSearchTitleIndex(fList[0]);
+                Constants.indexNames = index_names;
+                Constants.indexPaths = index_paths;
+                Constants.indexFolder = index_folder;
 
                 Intent intent = new Intent(view.getContext(), SearchActivity.class);
+                intent.putExtra("title","Search - LLP Act");
                 view.getContext().startActivity(intent);
 
 
@@ -194,6 +214,14 @@ public class MainActivity extends AppCompatActivity
             }
 
     }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 
     public static boolean printDifference(Long startDate, Long endDate) {
         //milliseconds
