@@ -3,45 +3,22 @@ package in.llpactapp.llpact;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.File;
-
-import es.dmoral.markdownview.MarkdownView;
-
-
-public class InfoDisplayActivity extends AppCompatActivity {
+public class AboutApp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_display);
-        Intent intent = getIntent();
-        String path = intent.getStringExtra("path");
-        String title = intent.getStringExtra("name");
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Log.d("markdown",path);
-        MarkdownView markdownView = findViewById(R.id.markdown_view);
-        markdownView.setBackgroundColor(getResources().getColor(R.color.colorBack));
-        markdownView.loadFromFile(new File(path));
-
-
+        setContentView(R.layout.activity_about_app);
     }
-    @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        getSupportActionBar().setTitle("About");
         return true;
     }
 
@@ -62,6 +39,5 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

@@ -130,8 +130,10 @@ public class MainActivity extends AppCompatActivity
     private void init() {
 
 
-
-
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("LLP Act");
+        getSupportActionBar().setSubtitle("Quick and Easy Reference");
         File docsFolder = new File(getApplicationContext().getFilesDir(), Constants.SOURCE_DIRECTORY);
         final File[] fList = docsFolder.listFiles();
 
@@ -146,7 +148,6 @@ public class MainActivity extends AppCompatActivity
 
         list_adapter = new CardViewAdapter(this, levelData);
         categories = findViewById(R.id.categoriesListView);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         floatingActionButton = findViewById(R.id.search_bt);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -166,13 +167,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
-
-
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
        /* NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
@@ -251,7 +253,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -285,22 +287,22 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_ask) {
-//
-//            Intent intent = new Intent(MainActivity.this,AskOfficers.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_forum) {
-//
-//            Intent intent = new Intent(MainActivity.this,Forum.class);
-//            startActivity(intent);
-//
-//
-//        }
-//
+           // Handle navigation view item clicks here.
+           int id = item.getItemId();
+
+           if (id == R.id.nav_about) {
+
+              Intent intent = new Intent(MainActivity.this,AboutApp.class);
+              startActivity(intent);
+
+            } /*else if (id == R.id.nav_share) {
+
+                Intent intent = new Intent(MainActivity.this,AboutApp.class);
+                startActivity(intent);
+
+
+        }*/
+
        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
