@@ -1,10 +1,14 @@
 package in.llpactapp.llpact;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.xeoh.android.texthighlighter.TextHighlighter;
 
 public class AboutApp extends AppCompatActivity {
 
@@ -12,6 +16,8 @@ public class AboutApp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_app);
+        TextView textView = findViewById(R.id.textView3);
+
     }
 
     @Override

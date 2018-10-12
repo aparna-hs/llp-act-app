@@ -5,21 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InfoDisplayActivity"
-    android:background="#FFFF">
+    >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    <es.dmoral.markdownview.MarkdownView
-        android:id="@+id/markdown_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
 
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="20dp" />
+        <SearchView
+            android:id="@+id/searchview"
+            android:layout_width="343dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="30dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:visibility="visible"
+            android:iconifiedByDefault="false"/>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        <!--<es.dmoral.markdownview.MarkdownView
+            android:id="@+id/markdown_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="20dp" >
+
+        </es.dmoral.markdownview.MarkdownView>-->
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                tools:layout_editor_absoluteX="5dp"
+                tools:layout_editor_absoluteY="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorBack"
+                android:textSize="17sp"
+                />
+            </ScrollView>
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>
