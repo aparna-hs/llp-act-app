@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
-        long checkthreedays = 1*minutesInMilli;
+        long checkthreedays = 5*daysInMilli;
 
         if(different>checkthreedays)
         {

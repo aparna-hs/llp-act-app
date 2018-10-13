@@ -138,7 +138,7 @@ public class InfoDisplayActivity extends AppCompatActivity {
         }
         catch (IOException e)
         {
-            Log.d("error","error");
+            Log.d("errorrrrr","error");
         }
 
         original_text = stringBuilder.toString();
@@ -147,33 +147,22 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
         ;
-        // final MarkdownView markdownView = findViewById(R.id.markdown_view);
-        // markdownView.setBackgroundColor(getResources().getColor(R.color.colorBack));
-        // markdownView.loadFromFile(new File(path));
+        //final MarkdownView markdownView = findViewById(R.id.markdown_view);
+        //markdownView.setBackgroundColor(getResources().getColor(R.color.colorBack));
+        //markdownView.loadFromFile(new File(path));
         // markdownView.setVisibility(View.INVISIBLE);
         final TextView textView = findViewById(R.id.textView4);
         //textView.setText(markdownView.toString());
 
 
         RxMDConfiguration markdownConfiguration = new RxMDConfiguration.Builder(getApplicationContext())
-                .setHeader1RelativeSize(1.6f)//default relative size of header1
-                .setHeader2RelativeSize(1.5f)//default relative size of header2
-                .setHeader3RelativeSize(1.4f)//default relative size of header3
-                .setHeader4RelativeSize(1.3f)//default relative size of header4
-                .setHeader5RelativeSize(1.2f)//default relative size of header5
-                .setHeader6RelativeSize(1.1f)//default relative size of header6
-                .setBlockQuotesLineColor(Color.LTGRAY)//default color of block quotes line
-                .setBlockQuotesBgColor(Color.LTGRAY, Color.RED, Color.BLUE)//default color of block quotes background and nested background
-                //default relative size of block quotes text size
-                .setHorizontalRulesColor(Color.LTGRAY)//default color of horizontal rules's background
-                .setHorizontalRulesHeight(Color.LTGRAY)//default height of horizontal rules
-                .setCodeFontColor(Color.LTGRAY)//default color of inline code's font
-                .setCodeBgColor(Color.LTGRAY)//default color of inline code's background
-                .setTheme(new ThemeDefault()).build();//default code block theme
+                .build();//default code block theme
 
         MarkdownProcessor markdownProcessor = new MarkdownProcessor(this);
         markdownProcessor.factory(TextFactory.create());
         markdownProcessor.config(markdownConfiguration);
+        //String result_text = .toString();
+        Log.d("uffffffff",stringBuilder.toString());
         textView.setText(markdownProcessor.parse(stringBuilder));
         textView.setMovementMethod(new ScrollingMovementMethod());
 
