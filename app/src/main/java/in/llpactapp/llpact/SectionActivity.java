@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ public class SectionActivity extends AppCompatActivity {
     List<String> sections;
     FloatingActionButton floatingActionButton;
     Toolbar toolbar;
+    String parent_path;
 
     private ArrayList<String> index_paths = new ArrayList<>();
     private  ArrayList<String> index_names = new ArrayList<>();
@@ -44,6 +47,8 @@ public class SectionActivity extends AppCompatActivity {
         String title = intent.getStringExtra("name");
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        File file = new File(root_dir_path);
+        parent_path = file.getParent();
 
 
         StructureService structureService = new StructureService();
@@ -131,7 +136,60 @@ public class SectionActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        boolean flag = check_if_main();
+        if(flag)
+        {
+            Intent setIntent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(setIntent);
+            return;
+
+        }
+        Intent setIntent = new Intent(getApplicationContext(),SectionActivity.class);
+        setIntent.putExtra("path",parent_path);
+        File file = new File(parent_path);
+        String parent_title = file.getName().substring(1);
+        setIntent.putExtra("name",parent_title);
+        startActivity(setIntent);
+    }
+
+    public  boolean check_if_main()
+    {
+        StructureService structureService = new StructureService();
+        LevelData levelData = structureService.getCurrentLevelData(parent_path,getApplicationContext());
+        String first = levelData.getLevelNames().get(0);
+        Log.d("first",first);
+        if(first.equals("Act")) {
+
+            return true;
+        }
+        return false;
+
     }
 
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.markdownview.MarkdownView;
 
@@ -36,21 +39,90 @@ public class InfoDisplayActivity extends AppCompatActivity {
     SearchView searchView;
     String query_text;
     String original_text;
+    TextView go_prev;
+    TextView go_next;
+    String new_path;
+    String new_name;
+    String path;
+    String parent_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_display);
         Intent intent = getIntent();
-        String path = intent.getStringExtra("path");
+        path = intent.getStringExtra("path");
         String title = intent.getStringExtra("name");
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        File file = new File(path);
         //reading from file to string
+        init(file);
+        parent_path = file.getParent();
+        StructureService structureService = new StructureService();
+        final LevelData levelData = structureService.getCurrentLevelData(parent_path,getApplicationContext());
+        final List<String> neighbor_paths = levelData.getLevelConstituents();
+        go_prev = findViewById(R.id.go_prev);
+        go_next = findViewById(R.id.go_next);
+
+        go_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i = 0; i<neighbor_paths.size();i++) {
+                    if (i != 0) {
+                        if (path.equals(neighbor_paths.get(i))) {
+
+                            new_path = levelData.getLevelConstituents().get(i-1);
+                            new_name = levelData.getLevelNames().get(i-1);
+                            Intent new_intent = new Intent(getApplicationContext(),InfoDisplayActivity.class);
+                            new_intent.putExtra("path",new_path);
+                            new_intent.putExtra("name",new_name);
+                            startActivity(new_intent);
+
+
+                        }
+                    }
+                }
+            }
+        });
+
+        go_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i = 0; i<neighbor_paths.size();i++) {
+                    if (i != (neighbor_paths.size()-1) ){
+                        if (path.equals(neighbor_paths.get(i))) {
+
+                            new_path = levelData.getLevelConstituents().get(i+1);
+                            new_name = levelData.getLevelNames().get(i+1);
+                            Intent new_intent = new Intent(getApplicationContext(),InfoDisplayActivity.class);
+                            new_intent.putExtra("path",new_path);
+                            new_intent.putExtra("name",new_name);
+                            startActivity(new_intent);
+
+
+
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+    }
+
+
+
+
+    public void init(File file)
+    {
+
         StringBuilder stringBuilder = new StringBuilder("");
 
-        File file = new File(path);
         try{
             BufferedReader reader = new BufferedReader(new FileReader(file));
             stringBuilder = new StringBuilder();
@@ -74,11 +146,11 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
 
-        Log.d("markdown",path);
-       // final MarkdownView markdownView = findViewById(R.id.markdown_view);
-       // markdownView.setBackgroundColor(getResources().getColor(R.color.colorBack));
-       // markdownView.loadFromFile(new File(path));
-       // markdownView.setVisibility(View.INVISIBLE);
+        ;
+        // final MarkdownView markdownView = findViewById(R.id.markdown_view);
+        // markdownView.setBackgroundColor(getResources().getColor(R.color.colorBack));
+        // markdownView.loadFromFile(new File(path));
+        // markdownView.setVisibility(View.INVISIBLE);
         final TextView textView = findViewById(R.id.textView4);
         //textView.setText(markdownView.toString());
 
@@ -105,17 +177,12 @@ public class InfoDisplayActivity extends AppCompatActivity {
         textView.setText(markdownProcessor.parse(stringBuilder));
         textView.setMovementMethod(new ScrollingMovementMethod());
 
-                //textView.setVisibility(View.VISIBLE);
+        //textView.setVisibility(View.VISIBLE);
 
 
         searchView = findViewById(R.id.searchview);
         searchView.setQueryHint("Type keyword here");
         searchView.setFocusable(false);
-        /*new TextHighlighter()
-                .setBackgroundColor(Color.parseColor("#FFFF00"))
-                .setForegroundColor(Color.RED)
-                .addTarget(markdownView)
-                .highlight("pa",TextHighlighter.BASE_MATCHER);*/
 
 
 
@@ -152,6 +219,7 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
 
+
     }
     @Override
     public boolean onSupportNavigateUp(){
@@ -181,8 +249,40 @@ public class InfoDisplayActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent setIntent = new Intent(getApplicationContext(),SectionActivity.class);
+        setIntent.putExtra("path",parent_path);
+        File file = new File(parent_path);
+        String parent_title = file.getName().substring(1);
+        setIntent.putExtra("name",parent_title);
+        startActivity(setIntent);
     }
 
 
