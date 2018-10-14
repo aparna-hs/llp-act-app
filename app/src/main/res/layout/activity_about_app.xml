@@ -1,24 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutApp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    tools:context=".AboutApp"
+    android:orientation="vertical">
+
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hi hello"
-        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorBack"
+        android:text="This App was born out of the need for quick and easy reference to the Limited Liability Partnership Act 2008."
+        android:textSize="17sp"
         tools:layout_editor_absoluteX="41dp"
         tools:layout_editor_absoluteY="69dp"
-        android:background="@color/colorBack"
         />
 
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="For any issues/feedback or to contribute to the content, ping me at :
+
+dev.happyappy@gmail.com"
+        android:textSize="17sp"
+        android:autoLink="email"
+        />
+
+    <TextView
+        android:id="@+id/gitlink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="17sp"
+        />
+
+    <TextView
+        android:id="@+id/thanks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="17sp"
+        android:text="Special thanks to Jayanth for coding guidance, and Amit, Arjun, Gokul, Harsha, Nikhil, Nupur and Surya for testing and proofreading."
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="15sp"
+        android:text="LLP Act 1.0"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/linkedin"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/copyright"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Made in India"/>
+
+
+
+
+</LinearLayout>

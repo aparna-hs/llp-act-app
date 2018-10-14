@@ -33,7 +33,9 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
-                android:id="@+id/go_prev"/>
+                android:id="@+id/go_prev"
+                android:autoLink="web"
+                android:linksClickable="true"/>
             <!-- <android.support.design.widget.FloatingActionButton
                 android:id="@+id/go_back"
                 android:layout_width="30dp"

@@ -2,10 +2,12 @@ package in.llpactapp.llpact;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,9 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xeoh.android.texthighlighter.TextHighlighter;
 import com.yydcdut.markdown.MarkdownProcessor;
+import com.yydcdut.markdown.callback.OnLinkClickCallback;
 import com.yydcdut.markdown.syntax.text.TextFactory;
 import com.yydcdut.markdown.theme.ThemeDefault;
 import com.yydcdut.rxmarkdown.RxMDConfiguration;
@@ -81,6 +85,22 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
                         }
+
+                    }
+                    else if(i==0 && path.equals(neighbor_paths.get(i)))
+                    {
+                        Toast toast=Toast.makeText(getApplicationContext(),"Reached Beginning!",Toast.LENGTH_SHORT);
+
+                        View view1 = toast.getView();
+
+//Gets the actual oval background of the Toast then sets the colour filter
+                        view1.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+
+//Gets the TextView from the Toast so it can be editted
+                        TextView text = view1.findViewById(android.R.id.message);
+                        text.setTextColor(getResources().getColor(R.color.colorAccent));
+                        text.setTextSize(25);
+                        toast.show();
                     }
                 }
             }
@@ -103,6 +123,23 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
                         }
+
+                    }
+
+                    else if(i==(neighbor_paths.size()-1) && path.equals(neighbor_paths.get(i)))
+                    {
+                        Toast toast=Toast.makeText(getApplicationContext(),"Reached End!",Toast.LENGTH_SHORT);
+                        View view1 = toast.getView();
+
+//Gets the actual oval background of the Toast then sets the colour filter
+                        view1.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+
+//Gets the TextView from the Toast so it can be editted
+                        TextView text = view1.findViewById(android.R.id.message);
+                        text.setTextColor(getResources().getColor(R.color.colorAccent));
+                        text.setTextSize(25);
+
+                        toast.show();
                     }
                 }
             }
@@ -156,7 +193,15 @@ public class InfoDisplayActivity extends AppCompatActivity {
 
 
         RxMDConfiguration markdownConfiguration = new RxMDConfiguration.Builder(getApplicationContext())
-                .build();//default code block theme
+                .setLinkFontColor(Color.BLUE)//default color of link text
+                .showLinkUnderline(true)//default value of whether displays link underline
+                .setOnLinkClickCallback(new OnLinkClickCallback() {//link click callback
+                    @Override
+                    public void onLinkClicked(View view, String link) {
+                        Log.d("linkclick",link);
+
+                    }
+                }) .build();
 
         MarkdownProcessor markdownProcessor = new MarkdownProcessor(this);
         markdownProcessor.factory(TextFactory.create());
@@ -164,7 +209,9 @@ public class InfoDisplayActivity extends AppCompatActivity {
         //String result_text = .toString();
         Log.d("uffffffff",stringBuilder.toString());
         textView.setText(markdownProcessor.parse(stringBuilder));
+        //textView.setText("http://mca.gov.in/MinistryV2/llpact.html");
         textView.setMovementMethod(new ScrollingMovementMethod());
+        Linkify.addLinks(textView, Linkify.WEB_URLS);
 
         //textView.setVisibility(View.VISIBLE);
 

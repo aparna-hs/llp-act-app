@@ -11,4 +11,13 @@
     <string name="title_activity_splash_screen_download">SplashScreenDownload</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="link_text_manual"><b>text2:</b> This is some other
+      text, with a <a href="http://www.google.com">link</a> specified
+      via an &lt;a&gt; tag.  Use a \"tel:\" URL
+      to <a href="tel:4155551212">dial a phone number</a>.
+    </string>
+
+    <string name="git">You can help improve the app by contributing to the code base at :
+        https://github.com/aparna-hs/llp-act-app</string>
 </resources>
