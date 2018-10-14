@@ -57,7 +57,7 @@ dev.happyappy@gmail.com"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:textSize="17sp"
-        android:text="Special thanks to Jayanth for coding guidance, and Amit, Arjun, Gokul, Harsha, Nikhil, Nupur and Surya for testing and proofreading."
+        android:text="Special thanks to Jayanth for coding guidance, and all my friends who gave valuable suggestions and helped in testing and proofreading."
         />
 
 
