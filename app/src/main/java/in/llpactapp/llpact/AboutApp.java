@@ -25,13 +25,18 @@ public class AboutApp extends AppCompatActivity {
         TextView gitlink = findViewById(R.id.gitlink);
         TextView linkedin = findViewById(R.id.linkedin);
         TextView copyright = findViewById(R.id.copyright);
+        TextView privacypolicy = findViewById(R.id.privacypolicy);
         //Linkify.addLinks(gitlink, Linkify.WEB_URLS);
         gitlink.setClickable(true);
         linkedin.setClickable(true);
+        privacypolicy.setClickable(true);
+        privacypolicy.setMovementMethod(LinkMovementMethod.getInstance());
         gitlink.setMovementMethod(LinkMovementMethod.getInstance());
         linkedin.setMovementMethod(LinkMovementMethod.getInstance());
         String text1 = "Created and Crafted by <a href='https://www.linkedin.com/in/aparna-h-s-67a3585a'>Aparna H S</a>";
         String text = "To help improve the app, contribute to the code base <a href='https://github.com/aparna-hs/llp-act-app'>here</a>";
+        String text3 = "<a href='https://github.com/aparna-hs/llp-act-app/blob/master/Privacy%20Policy.md'>Privacy Policy</a>";
+        privacypolicy.setText(Html.fromHtml(text3));
         gitlink.setText(Html.fromHtml(text));
         linkedin.setText(Html.fromHtml(text1));
         copyright.setText("\u00a9"+"2018 Aparna H S");
