@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class StructureService {
 
@@ -31,6 +32,7 @@ public class StructureService {
         //get all the files from a directory
         Log.d("HEREEE",directory.getAbsolutePath());
         File[] fList = directory.listFiles();
+        Arrays.sort(fList);
 
         if(fList==null)
             Log.d("HEREE","i m null");

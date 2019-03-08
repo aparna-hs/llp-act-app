@@ -65,12 +65,12 @@ dev.happyappy@gmail.com"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
         android:textSize="15sp"
-        android:text="LLP Act 1.0"/>
+        android:text="LLP Act 1.3"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,6 +109,19 @@ dev.happyappy@gmail.com"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"
         android:text="Made in India"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="italic"
+        android:text="Disclaimer: All efforts have been made to ensure that the contents of this app are accurate. However, users are requested to verify the content before relying on the same. Maker of this app holds no responsibility for any mistakes which may have inadvertently crept in. "/>
+
 
 
 
